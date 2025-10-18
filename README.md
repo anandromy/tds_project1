@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI-Powered App Generator
+
+A Next.js project that automatically generates minimal web applications using AI, pushes them to GitHub, and provides live URLs for evaluation. This tool leverages OpenRouter AI and GitHub Pages to streamline rapid prototyping and deployment of small web apps.
+
+---
+
+## Features
+
+- **AI-Driven App Generation**  
+  Generate HTML/CSS/JS code based on a textual brief using `aipipe.org` (OpenRouter GPT-4.1-nano model).
+
+- **Automated GitHub Integration**  
+  Each generated app is automatically pushed to a GitHub repository with a commit, preserving version history.
+
+- **Live App Hosting**  
+  GitHub Pages integration allows each generated app to be viewed live via a public URL.
+
+- **Evaluation Integration**  
+  After generation, the live GitHub URL can be sent via a POST request to an evaluation endpoint for further processing or grading.
+
+- **Local Development Ready**  
+  Generates and stores apps locally in `generated_apps/` for easy inspection and testing.
+
+---
+
+## Tech Stack
+
+- **Frontend / Backend:** Next.js (App Router)  
+- **AI Integration:** OpenRouter AI via `fetch`  
+- **Version Control:** Git + Octokit (GitHub REST API)  
+- **Hosting:** GitHub Pages for live app previews  
+- **Language:** TypeScript, Node.js  
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js >= 18  
+- npm or yarn  
+- GitHub Personal Access Token (with `repo` permissions)  
+- `.env.local` file with:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```env
+AI_PIPE_TOKEN=<your-ai-pipe-token>
+GITHUB_TOKEN=<your-github-token>
