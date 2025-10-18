@@ -1,6 +1,44 @@
 import { z } from 'zod'
 import fs from "fs/promises"
 import path from "path"
+import { Octokit } from "@octokit/rest";
+
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+const octokit = new Octokit({
+    auth: process.env.github_token
+})
+
+async function pushToGitHub(folderName: string, fileContent: string) {
+  const owner = "anandromy";
+  const repo = "tds_project1"; // create one like "ai-generated-apps"
+  const path = `generated_apps/${folderName}/index.html`;
+  const message = `Add or update generated app: ${folderName}`;
+  const encodedContent = Buffer.from(fileContent).toString("base64");
+
+  let sha;
+  try {
+    const { data } = await octokit.repos.getContent({ owner, repo, path });
+    if (!Array.isArray(data) && data.sha) sha = data.sha;
+  } catch (err: any) {
+    if (err.status !== 404) throw err; // ignore 404 (new file)
+  }
+
+  await octokit.repos.createOrUpdateFileContents({
+    owner,
+    repo,
+    path,
+    message,
+    content: encodedContent,
+    sha, // only required if updating
+  });
+
+  return `https://github.com/${owner}/${repo}/blob/main/${path}`;
+}
 
 const briefSchema = z.object({
   email: z.string().email(),
@@ -47,7 +85,24 @@ export async function POST(request:Request) {
         await fs.mkdir(dirPath, { recursive: true });
         await fs.writeFile(path.join(dirPath, "index.html"), content.text || "");
 
-        return Response.json({ success: true, folder: folderName });
+
+        const githubUrl = await pushToGitHub(folderName, content.text || "");
+
+        await fetch(data.evaluation_url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                email: data.email,
+                task: data.task,
+                round: data.round,
+                nonce: data.nonce,
+                repo_url: githubUrl,
+                commit_sha: "",
+                page_url: ""
+            }),
+        });
+        
+        return Response.json({ success: true, folder: folderName, githubUrl});
     } catch(err) {
         return Response.json(null, { status: 500 })
     }

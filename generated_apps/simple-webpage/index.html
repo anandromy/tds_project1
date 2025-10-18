@@ -1,41 +1,38 @@
-Certainly! Here's a minimal, production-ready HTML + JavaScript webpage that displays "Good Morning!" centered on the screen with a light blue background.
+Here's a simple, production-ready HTML file that displays "Good Night!" centered on a light blue background:
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Simple Webpage</title>
-<style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background-color: #add8e6; /* light blue */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: Arial, sans-serif;
-    font-size: 2em;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple Webpage</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: #add8e6; /* Light blue background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      font-size: 2em;
+    }
+  </style>
 </head>
 <body>
-
-<div id="message"></div>
-
-<script>
-  document.getElementById('message').textContent = 'Good Morning!';
-</script>
-
+  <div id="message">Good Night!</div>
+  <script>
+    // Optional JavaScript for future enhancements
+    // Currently, no additional behavior is needed.
+    // You can add event listeners or dynamic content here.
+  </script>
 </body>
 </html>
 ```
 
-**Explanation:**
-- The `<!DOCTYPE html>` declares the document as HTML5.
-- The `<meta>` tags ensure proper character encoding and responsiveness.
-- Inline CSS uses Flexbox to center the message both vertically and horizontally, with a light blue background.
-- The JavaScript sets the message text. Since it's static, it could also be inserted directly into the HTML, but including a script makes it clearer for dynamic content.
+**Usage:**
+- Save this code as `index.html`.
+- Open it in a web browser to see the centered "Good Night!" message on a light blue background.
 
-You can save this code to an `.html` file and open in a browser for a minimal, fully functional webpage.
+This code is minimal, well-structured, and ready for production use.
